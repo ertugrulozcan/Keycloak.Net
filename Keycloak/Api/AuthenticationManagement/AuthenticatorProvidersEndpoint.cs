@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.Net.Http;
 using Keycloak.Infrastructure;
 using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.AuthenticationManagement
 {
-	public sealed class AuthenticatorProvidersEndpoint : RealmBoundedEndpoint, IHasGet
+	public sealed class AuthenticatorProvidersEndpoint : RealmBoundedEndpoint<AuthenticatorProvidersEndpoint.TUrlParams>, IHasGet
 	{
 		#region Properties
 
@@ -35,9 +34,23 @@ namespace Keycloak.Api.AuthenticationManagement
 
 		#region Methods
 
-		public IResponseResult<T> Get<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null)
+		public IResponseResult Get(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Get, body, parameters, headers);
+			return this.ExecuteRequest(HttpMethod.Get, body, queryString, headers);
+		}
+		
+		public IResponseResult<T> Get<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		{
+			return this.ExecuteRequest<T>(HttpMethod.Get, body, queryString, headers);
+		}
+
+		#endregion
+		
+		#region QueryParams
+
+		public sealed class TUrlParams : EndpointUrlParams
+		{
+			
 		}
 
 		#endregion

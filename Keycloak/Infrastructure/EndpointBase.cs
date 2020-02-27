@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using Keycloak.Helpers;
 using Keycloak.Rest.Models;
@@ -38,10 +37,16 @@ namespace Keycloak.Infrastructure
 
 		#region Methods
 
-		protected IResponseResult<T> ExecuteRequest<T>(HttpMethod method, RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null)
+		protected IResponseResult ExecuteRequest(HttpMethod method, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			string url = this.GenerateUrl();
-			return this.RestHandler.ExecuteRequest<T>(method, url, body, parameters, headers);
+			return this.RestHandler.ExecuteRequest(method, url, body, queryString, headers);
+		}
+		
+		protected IResponseResult<T> ExecuteRequest<T>(HttpMethod method, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		{
+			string url = this.GenerateUrl();
+			return this.RestHandler.ExecuteRequest<T>(method, url, body, queryString, headers);
 		}
 
 		private string GenerateUrl()

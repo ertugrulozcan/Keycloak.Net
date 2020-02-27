@@ -2,7 +2,7 @@ using Keycloak.Infrastructure;
 
 namespace Keycloak.Api.AuthenticationManagement
 {
-	public sealed class AuthenticationEndpoint : RealmBoundedEndpoint
+	public sealed class AuthenticationEndpoint : RealmBoundedEndpoint<AuthenticationEndpoint.TUrlParams>
 	{
 		#region Properties
 
@@ -10,7 +10,7 @@ namespace Keycloak.Api.AuthenticationManagement
 		{
 			get
 			{
-				return "authentication";
+				return $"/{this.RealmSlug}/authentication";
 			}
 		}
 
@@ -25,6 +25,15 @@ namespace Keycloak.Api.AuthenticationManagement
 		#region Constructors
 
 		public AuthenticationEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
+		{
+			
+		}
+
+		#endregion
+		
+		#region QueryParams
+
+		public sealed class TUrlParams : EndpointUrlParams
 		{
 			
 		}

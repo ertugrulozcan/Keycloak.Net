@@ -1,10 +1,10 @@
 namespace Keycloak.Infrastructure
 {
-	public abstract class RealmBoundedEndpoint : EndpointBase<RealmBoundedEndpoint.TUrlParams>
+	public abstract class RealmBoundedEndpoint<TUrlParams> : EndpointBase<TUrlParams> where TUrlParams : IUrlParams
 	{
 		#region Properties
 
-		public string RealmSlug { get; }
+		protected string RealmSlug { get; }
 
 		#endregion
 
@@ -13,15 +13,6 @@ namespace Keycloak.Infrastructure
 		protected RealmBoundedEndpoint(string baseUrl, string realmSlug) : base(baseUrl)
 		{
 			this.RealmSlug = realmSlug;
-		}
-
-		#endregion
-		
-		#region QueryParams
-
-		public sealed class TUrlParams : EndpointUrlParams
-		{
-			
 		}
 
 		#endregion

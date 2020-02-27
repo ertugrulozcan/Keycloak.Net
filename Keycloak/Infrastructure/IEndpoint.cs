@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Keycloak.Rest.Models;
 
 namespace Keycloak.Infrastructure
@@ -10,21 +9,29 @@ namespace Keycloak.Infrastructure
 
 	public interface IHasGet
 	{
-		IResponseResult<T> Get<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null);
+		IResponseResult Get(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		
+		IResponseResult<T> Get<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
 	public interface IHasPost
 	{
-		IResponseResult<T> Post<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null);
+		IResponseResult Post(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		
+		IResponseResult<T> Post<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
 	public interface IHasPut
 	{
-		IResponseResult<T> Put<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null);
+		IResponseResult Put(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		
+		IResponseResult<T> Put<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
 	public interface IHasDelete
 	{
-		IResponseResult<T> Delete<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null);
+		IResponseResult Delete(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		
+		IResponseResult<T> Delete<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 }

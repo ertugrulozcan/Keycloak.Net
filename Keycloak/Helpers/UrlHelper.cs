@@ -111,7 +111,7 @@ namespace Keycloak.Helpers
 				int endIndex = url.IndexOf(STRING_FORMAT_END_BRACE, StringComparison.Ordinal);
 				if (endIndex >= 0)
 				{
-					string tag = url.Substring(startIndex, endIndex - startIndex + 1);
+					string tag = url.Substring(startIndex, endIndex - startIndex + STRING_FORMAT_END_BRACE.Length);
 					url = url.Replace($"/{tag}", string.Empty);
 					url = url.Replace(tag, string.Empty);
 

@@ -67,12 +67,6 @@ namespace Keycloak.Api.Auth
 
 		private static IResponseResult<AuthorizationToken> GetTokenAsConfidential(string baseUrl, Credentials credentials, ClientProtocol protocol)
 		{
-			IDictionary<string, object> parameters = new Dictionary<string, object>();
-			IDictionary<string, object> headers = new Dictionary<string, object>
-			{
-				{ "Content-Type", "application/x-www-form-urlencoded" }
-			};
-			
 			var body = RequestBody.CreateUrlEncoded(new Dictionary<string, string>
 			{
 				{ "username", credentials.Username },
@@ -87,7 +81,7 @@ namespace Keycloak.Api.Auth
 				.SetRealm(new MasterRealm())
 				.SetProtocol(protocol);
 
-			return tokenEndpoint.Post<AuthorizationToken>(body, parameters, headers);
+			return tokenEndpoint.Post<AuthorizationToken>(body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));
 		}
 		
 		private static IResponseResult<AuthorizationToken> GetTokenAsPublic(string baseUrl, Credentials credentials, ClientProtocol protocol)

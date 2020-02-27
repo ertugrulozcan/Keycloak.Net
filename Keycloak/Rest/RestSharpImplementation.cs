@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using Keycloak.Extensions;
 using Keycloak.Rest.Models;
@@ -12,9 +11,9 @@ namespace Keycloak.Rest
 	{
 		#region Methods
 
-		public IResponseResult<TResult> ExecuteRequest<TResult>(HttpMethod method, string url, RequestBody body, IDictionary<string, object> parameters, IDictionary<string, object> headers)
+		public IResponseResult<TResult> ExecuteRequest<TResult>(HttpMethod method, string url, RequestBody body, IQueryString queryString, IHeaderCollection headers)
 		{
-			var response = this.ExecuteRequest(method, url, body, parameters, headers);
+			var response = this.ExecuteRequest(method, url, body, queryString, headers);
 			if (response.IsSuccess)
 			{
 				return response.Cast(x => Newtonsoft.Json.JsonConvert.DeserializeObject<TResult>(x.Data?.ToString()));	
@@ -25,7 +24,7 @@ namespace Keycloak.Rest
 			}
 		}
 		
-		public IResponseResult ExecuteRequest(HttpMethod method, string url, RequestBody body, IDictionary<string, object> parameters, IDictionary<string, object> headers)
+		public IResponseResult ExecuteRequest(HttpMethod method, string url, RequestBody body, IQueryString queryString, IHeaderCollection headers)
 		{
 			if (string.IsNullOrEmpty(url))
 			{
@@ -50,9 +49,9 @@ namespace Keycloak.Rest
 					}
 				}
 
-				if (parameters != null)
+				if (queryString != null)
 				{
-					foreach (var parameter in parameters)
+					foreach (var parameter in queryString.ToDictionary())
 					{
 						if (!string.IsNullOrEmpty(parameter.Key) && parameter.Value != null && !string.IsNullOrEmpty(parameter.Value.ToString()))
 						{

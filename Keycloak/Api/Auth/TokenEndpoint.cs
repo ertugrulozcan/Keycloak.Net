@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Net.Http;
 using Keycloak.Core.Models.Realms;
 using Keycloak.Helpers;
@@ -43,9 +42,14 @@ namespace Keycloak.Api.Auth
 
 		#region Methods
 
-		public IResponseResult<T> Post<T>(RequestBody body = null, IDictionary<string, object> parameters = null, IDictionary<string, object> headers = null)
+		public IResponseResult Post(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Post, body, parameters, headers);
+			return this.ExecuteRequest(HttpMethod.Post, body, queryString, headers);
+		}
+		
+		public IResponseResult<T> Post<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		{
+			return this.ExecuteRequest<T>(HttpMethod.Post, body, queryString, headers);
 		}
 
 		#endregion
