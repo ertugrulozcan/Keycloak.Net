@@ -12,7 +12,7 @@ namespace Keycloak.Tests
 	{
 		#region Constants
 
-		protected const string BASE_URL = "http://localhost:8080/";
+		protected string BASE_URL { get; private set; }
 
 		#endregion
 
@@ -28,6 +28,8 @@ namespace Keycloak.Tests
 		public void Setup()
 		{
 			var configuration = this.ReadAppSettings("appsettings.json", "Keycloak");
+			this.BASE_URL = configuration["BaseUrl"];
+			
 			this.Credentials = new Credentials()
 			{
 				Username = configuration["Username"],
