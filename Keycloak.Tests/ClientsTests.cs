@@ -1,6 +1,6 @@
-using Keycloak.Api.Auth;
 using Keycloak.Api.Clients;
 using Keycloak.Core.Models.Clients;
+using Keycloak.Core.ResponseModels.Client;
 using Keycloak.Rest.Models;
 using NUnit.Framework;
 
@@ -42,6 +42,29 @@ namespace Keycloak.Tests
 			else
 			{
 				Assert.Fail(getClientsResponse.Message);
+			}
+		}
+		
+		[Test]
+		public void GetClientSecretTest()
+		{
+			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
+			var urlParams = new ClientSecretEndpoint.EndpointUrlParams();
+			urlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b");
+			
+			var getClientSecretResponse = clientsEndpoint.ClientSecret.Get<ClientSecretResponseModel>(
+				urlParams: urlParams,
+				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
+			
+			if (getClientSecretResponse.IsSuccess)
+			{
+				var clientSecret = getClientSecretResponse.Data;
+				Assert.NotNull(clientSecret);
+				//Assert.AreEqual(this.Credentials.ClientSecret, clientSecret.Value);
+			}
+			else
+			{
+				Assert.Fail(getClientSecretResponse.Message);
 			}
 		}
 	}

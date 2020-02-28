@@ -5,8 +5,8 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Clients
 {
-	public class ClientsEndpoint : 
-		RealmBoundedEndpoint<ClientsEndpoint.EndpointUrlParams>, 
+	public sealed class ClientsEndpoint : 
+		AuthorizedRealmBoundedEndpoint<ClientsEndpoint.EndpointUrlParams>, 
 		IHasGet<ClientsEndpoint.EndpointUrlParams>, 
 		IHasPost<ClientsEndpoint.EndpointUrlParams>, 
 		IHasPut<ClientsEndpoint.EndpointUrlParams>, 
@@ -20,13 +20,19 @@ namespace Keycloak.Api.Clients
 		
 		#region Properties
 
-		public override string Slug
+		public override string SelfPath
 		{
 			get
 			{
-				return $"/auth/admin/realms/{this.RealmSlug}/clients/{CLIENT_ID_TAG.ToUrlParam()}";
+				return $"/clients/{CLIENT_ID_TAG.ToUrlParam()}";
 			}
 		}
+
+		#endregion
+
+		#region Sub Endpoints
+
+		public ClientSecretEndpoint ClientSecret { get; }
 
 		#endregion
 
@@ -39,7 +45,7 @@ namespace Keycloak.Api.Clients
 		/// <param name="realmSlug"></param>
 		public ClientsEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
 		{
-			
+			this.ClientSecret = new ClientSecretEndpoint(this);
 		}
 
 		#endregion
@@ -90,7 +96,7 @@ namespace Keycloak.Api.Clients
 		
 		#region QueryParams
 
-		public sealed class EndpointUrlParams : UrlParamsBase
+		public class EndpointUrlParams : UrlParamsBase
 		{
 			public EndpointUrlParams SetClientId(string clientId)
 			{
