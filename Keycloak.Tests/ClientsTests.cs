@@ -11,23 +11,33 @@ namespace Keycloak.Tests
 		[Test]
 		public void GetClientsTest()
 		{
-			var tokenResult = Authenticator.GetToken(BASE_URL, this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
-			if (tokenResult.IsSuccess)
-			{
-				var token = tokenResult.Data;
-				Assert.NotNull(token);
-			}
-			else
-			{
-				Assert.Fail(tokenResult.Message);	
-			}
-			
 			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
-			var getClientsResponse = clientsEndpoint.Get<Client[]>(headers: HeaderCollection.Add("Authorization", $"Bearer {tokenResult.Data.AccessToken}"));
+			var getClientsResponse = clientsEndpoint.Get<Client[]>(headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			if (getClientsResponse.IsSuccess)
 			{
 				var clients = getClientsResponse.Data;
 				Assert.NotNull(clients);
+			}
+			else
+			{
+				Assert.Fail(getClientsResponse.Message);
+			}
+		}
+		
+		[Test]
+		public void GetClientByIdTest()
+		{
+			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
+			var urlParams = new ClientsEndpoint.EndpointUrlParams().SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b");
+			var getClientsResponse = clientsEndpoint.Get<Client>(
+				urlParams: urlParams,
+				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
+			
+			if (getClientsResponse.IsSuccess)
+			{
+				var client = getClientsResponse.Data;
+				Assert.NotNull(client);
+				Assert.AreEqual("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b", client.Id);
 			}
 			else
 			{

@@ -7,31 +7,31 @@ namespace Keycloak.Infrastructure
 		string Slug { get; }
 	}
 
-	public interface IHasGet
+	public interface IHasGet<in TUrlParams> where TUrlParams : IUrlParams
 	{
-		IResponseResult Get(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult Get(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 		
-		IResponseResult<T> Get<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult<T> Get<T>(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
-	public interface IHasPost
+	public interface IHasPost<in TUrlParams> where TUrlParams : IUrlParams
 	{
-		IResponseResult Post(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult Post(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 		
-		IResponseResult<T> Post<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult<T> Post<T>(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
-	public interface IHasPut
+	public interface IHasPut<in TUrlParams> where TUrlParams : IUrlParams
 	{
-		IResponseResult Put(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult Put(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 		
-		IResponseResult<T> Put<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult<T> Put<T>(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 	
-	public interface IHasDelete
+	public interface IHasDelete<in TUrlParams> where TUrlParams : IUrlParams
 	{
-		IResponseResult Delete(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult Delete(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 		
-		IResponseResult<T> Delete<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
+		IResponseResult<T> Delete<T>(TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null);
 	}
 }

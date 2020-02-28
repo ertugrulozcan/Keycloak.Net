@@ -6,7 +6,7 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Auth
 {
-	public class TokenEndpoint : UnboundedEndpoint<TokenEndpoint.TUrlParams>, IHasPost
+	public class TokenEndpoint : UnboundedEndpoint<TokenEndpoint.EndpointUrlParams>, IHasPost<TokenEndpoint.EndpointUrlParams>
 	{
 		#region Constants
 
@@ -42,29 +42,29 @@ namespace Keycloak.Api.Auth
 
 		#region Methods
 
-		public IResponseResult Post(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Post(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest(HttpMethod.Post, body, queryString, headers);
+			return this.ExecuteRequest(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Post<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Post<T>(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Post, body, queryString, headers);
+			return this.ExecuteRequest<T>(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
 
 		#endregion
 
 		#region QueryParams
 
-		public sealed class TUrlParams : EndpointUrlParams
+		public sealed class EndpointUrlParams : UrlParamsBase
 		{
-			public TUrlParams SetRealm(IRealm realm)
+			public EndpointUrlParams SetRealm(IRealm realm)
 			{
 				this.SetKeyValue(REALM_NAME_TAG, realm.ToString());
 				return this;
 			}
 			
-			public TUrlParams SetProtocol(ClientProtocol protocol)
+			public EndpointUrlParams SetProtocol(ClientProtocol protocol)
 			{
 				this.SetKeyValue(PROTOCOL_TYPE_TAG, protocol.ToString());
 				return this;

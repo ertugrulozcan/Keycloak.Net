@@ -77,11 +77,11 @@ namespace Keycloak.Api.Auth
 			});
 
 			var tokenEndpoint = new TokenEndpoint(baseUrl);
-			tokenEndpoint.UrlParams
+			var urlParams = new TokenEndpoint.EndpointUrlParams()
 				.SetRealm(new MasterRealm())
 				.SetProtocol(protocol);
 
-			return tokenEndpoint.Post<AuthorizationToken>(body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));
+			return tokenEndpoint.Post<AuthorizationToken>(urlParams, body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));
 		}
 		
 		private static IResponseResult<AuthorizationToken> GetTokenAsPublic(string baseUrl, Credentials credentials, ClientProtocol protocol)

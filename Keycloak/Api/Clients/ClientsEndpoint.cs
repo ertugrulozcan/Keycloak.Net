@@ -5,7 +5,12 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Clients
 {
-	public class ClientsEndpoint : RealmBoundedEndpoint<ClientsEndpoint.TUrlParams>, IHasGet, IHasPost, IHasPut, IHasDelete
+	public class ClientsEndpoint : 
+		RealmBoundedEndpoint<ClientsEndpoint.EndpointUrlParams>, 
+		IHasGet<ClientsEndpoint.EndpointUrlParams>, 
+		IHasPost<ClientsEndpoint.EndpointUrlParams>, 
+		IHasPut<ClientsEndpoint.EndpointUrlParams>, 
+		IHasDelete<ClientsEndpoint.EndpointUrlParams>
 	{
 		#region Constants
 
@@ -41,53 +46,53 @@ namespace Keycloak.Api.Clients
 
 		#region Methods
 
-		public IResponseResult Get(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Get(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest(HttpMethod.Get, body, queryString, headers);
+			return this.ExecuteRequest(HttpMethod.Get, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Get<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Get<T>(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Get, body, queryString, headers);
+			return this.ExecuteRequest<T>(HttpMethod.Get, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult Post(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Post(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest(HttpMethod.Post, body, queryString, headers);
+			return this.ExecuteRequest(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Post<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Post<T>(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Post, body, queryString, headers);
+			return this.ExecuteRequest<T>(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult Put(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Put(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest(HttpMethod.Put, body, queryString, headers);
+			return this.ExecuteRequest(HttpMethod.Put, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Put<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Put<T>(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Put, body, queryString, headers);
+			return this.ExecuteRequest<T>(HttpMethod.Put, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult Delete(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Delete(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest(HttpMethod.Delete, body, queryString, headers);
+			return this.ExecuteRequest(HttpMethod.Delete, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Delete<T>(RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Delete<T>(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			return this.ExecuteRequest<T>(HttpMethod.Delete, body, queryString, headers);
+			return this.ExecuteRequest<T>(HttpMethod.Delete, urlParams, body, queryString, headers);
 		}
 
 		#endregion
 		
 		#region QueryParams
 
-		public sealed class TUrlParams : EndpointUrlParams
+		public sealed class EndpointUrlParams : UrlParamsBase
 		{
-			public TUrlParams SetClientId(string clientId)
+			public EndpointUrlParams SetClientId(string clientId)
 			{
 				this.SetKeyValue(CLIENT_ID_TAG, clientId);
 				return this;

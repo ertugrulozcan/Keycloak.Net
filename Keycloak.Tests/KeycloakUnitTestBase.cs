@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Keycloak.Api.Auth;
 using Keycloak.Core.Models.Auth;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
@@ -19,6 +20,8 @@ namespace Keycloak.Tests
 		#region Properties
 
 		protected Credentials Credentials { get; private set; }
+		
+		protected AuthorizationToken Token { get; private set; }
 
 		#endregion
 
@@ -38,6 +41,19 @@ namespace Keycloak.Tests
 				ClientSecret = configuration["ClientSecret"],
 				GrantType = "password"
 			};
+			
+			var tokenResult = Authenticator.GetToken(this.BASE_URL, this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
+			if (tokenResult.IsSuccess)
+			{
+				var token = tokenResult.Data;
+				Assert.NotNull(token);
+
+				this.Token = token;
+			}
+			else
+			{
+				Assert.Fail(tokenResult.Message);	
+			}
 		}
 
 		#endregion

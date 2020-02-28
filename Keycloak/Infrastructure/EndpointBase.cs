@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using Keycloak.Helpers;
 using Keycloak.Rest.Models;
@@ -16,7 +15,7 @@ namespace Keycloak.Infrastructure
 		
 		public abstract string Slug { get; }
 		
-		public TUrlParams UrlParams { get; }
+		//public TUrlParams UrlParams { get; }
 
 		#endregion
 
@@ -30,32 +29,35 @@ namespace Keycloak.Infrastructure
 		{
 			this.BaseUrl = baseUrl;
 			this.RestHandler = new RestSharpImplementation();
-			this.UrlParams = Activator.CreateInstance<TUrlParams>();
+			//this.UrlParams = Activator.CreateInstance<TUrlParams>();
 		}
 
 		#endregion
 
 		#region Methods
 
-		protected IResponseResult ExecuteRequest(HttpMethod method, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		protected IResponseResult ExecuteRequest(HttpMethod method, TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			string url = this.GenerateUrl();
+			string url = this.GenerateUrl(urlParams);
 			return this.RestHandler.ExecuteRequest(method, url, body, queryString, headers);
 		}
 		
-		protected IResponseResult<T> ExecuteRequest<T>(HttpMethod method, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		protected IResponseResult<T> ExecuteRequest<T>(HttpMethod method, TUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
-			string url = this.GenerateUrl();
+			string url = this.GenerateUrl(urlParams);
 			return this.RestHandler.ExecuteRequest<T>(method, url, body, queryString, headers);
 		}
 
-		private string GenerateUrl()
+		private string GenerateUrl(TUrlParams urlParams)
 		{
 			string url = $"{this.BaseUrl.TrimEnd('/')}/{this.Slug.TrimStart('/')}";
 
-			foreach (var urlParam in this.UrlParams.UrlParamsDictionary)
+			if (urlParams != null)
 			{
-				url = UrlHelper.ReplaceOrRemove(url, urlParam.Key, urlParam.Value);
+				foreach (var urlParam in urlParams.UrlParamsDictionary)
+				{
+					url = UrlHelper.ReplaceOrRemove(url, urlParam.Key, urlParam.Value);
+				}	
 			}
 
 			url = UrlHelper.ClearTags(url);

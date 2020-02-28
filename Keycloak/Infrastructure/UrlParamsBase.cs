@@ -7,7 +7,7 @@ namespace Keycloak.Infrastructure
 		Dictionary<string, string> UrlParamsDictionary { get; }
 	}
 	
-	public abstract class EndpointUrlParams : IUrlParams
+	public abstract class UrlParamsBase : IUrlParams
 	{
 		public Dictionary<string, string> UrlParamsDictionary { get; } = new Dictionary<string, string>();
 		
