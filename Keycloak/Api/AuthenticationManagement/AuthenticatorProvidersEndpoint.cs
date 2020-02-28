@@ -8,7 +8,7 @@ namespace Keycloak.Api.AuthenticationManagement
 	{
 		#region Properties
 
-		public override string Slug
+		public override string SelfPath
 		{
 			get
 			{

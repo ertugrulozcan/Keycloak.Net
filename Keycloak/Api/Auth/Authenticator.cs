@@ -76,9 +76,8 @@ namespace Keycloak.Api.Auth
 				{ "client_secret", credentials.ClientSecret },
 			});
 
-			var tokenEndpoint = new TokenEndpoint(baseUrl);
+			var tokenEndpoint = new TokenEndpoint(baseUrl, "master");
 			var urlParams = new TokenEndpoint.EndpointUrlParams()
-				.SetRealm(new MasterRealm())
 				.SetProtocol(protocol);
 
 			return tokenEndpoint.Post<AuthorizationToken>(urlParams, body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));

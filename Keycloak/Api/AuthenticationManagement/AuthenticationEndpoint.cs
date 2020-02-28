@@ -6,11 +6,11 @@ namespace Keycloak.Api.AuthenticationManagement
 	{
 		#region Properties
 
-		public override string Slug
+		public override string SelfPath
 		{
 			get
 			{
-				return $"/{this.RealmSlug}/authentication";
+				return $"/{this.RealmName}/authentication";
 			}
 		}
 

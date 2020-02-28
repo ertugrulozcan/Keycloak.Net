@@ -4,7 +4,7 @@ namespace Keycloak.Infrastructure
 {
 	public interface IEndpoint
 	{
-		string Slug { get; }
+		string SelfPath { get; }
 	}
 
 	public interface IHasGet<in TUrlParams> where TUrlParams : IUrlParams

@@ -121,5 +121,15 @@ namespace Keycloak.Helpers
 			
 			return url;
 		}
+
+		public static string ClearRepeatedSlashes(string url)
+		{
+			while (url.Contains("//"))
+			{
+				url = url.Replace("//", "/");
+			}
+
+			return url;
+		}
 	}
 }

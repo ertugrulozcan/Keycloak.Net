@@ -1,27 +1,25 @@
 using System.Net.Http;
-using Keycloak.Core.Models.Realms;
 using Keycloak.Helpers;
 using Keycloak.Infrastructure;
 using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Auth
 {
-	public class TokenEndpoint : UnboundedEndpoint<TokenEndpoint.EndpointUrlParams>, IHasPost<TokenEndpoint.EndpointUrlParams>
+	public sealed class TokenEndpoint : RealmBoundedEndpoint<TokenEndpoint.EndpointUrlParams>, IAuthorizedEndpoint, IHasPost<TokenEndpoint.EndpointUrlParams>
 	{
 		#region Constants
-
-		private const string REALM_NAME_TAG = "REALM_NAME";
+		
 		private const string PROTOCOL_TYPE_TAG = "PROTOCOL_TYPE";
 
 		#endregion
 		
 		#region Properties
 
-		public override string Slug
+		public override string SelfPath
 		{
 			get
 			{
-				return $"/auth/realms/{REALM_NAME_TAG.ToUrlParam()}/protocol/{PROTOCOL_TYPE_TAG.ToUrlParam()}/token";
+				return $"/protocol/{PROTOCOL_TYPE_TAG.ToUrlParam()}/token";
 			}
 		}
 
@@ -33,7 +31,8 @@ namespace Keycloak.Api.Auth
 		/// Constructor
 		/// </summary>
 		/// <param name="baseUrl"></param>
-		public TokenEndpoint(string baseUrl) : base(baseUrl)
+		/// <param name="realmSlug"></param>
+		public TokenEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
 		{
 			
 		}
@@ -58,12 +57,6 @@ namespace Keycloak.Api.Auth
 
 		public sealed class EndpointUrlParams : UrlParamsBase
 		{
-			public EndpointUrlParams SetRealm(IRealm realm)
-			{
-				this.SetKeyValue(REALM_NAME_TAG, realm.ToString());
-				return this;
-			}
-			
 			public EndpointUrlParams SetProtocol(ClientProtocol protocol)
 			{
 				this.SetKeyValue(PROTOCOL_TYPE_TAG, protocol.ToString());
