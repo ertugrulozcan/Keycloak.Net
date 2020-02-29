@@ -1,13 +1,13 @@
 using Keycloak.Helpers;
 using Keycloak.Infrastructure;
 
-namespace Keycloak.Api.Clients
+namespace Keycloak.Api.Users
 {
-	public sealed class ClientsEndpoint : FullBaseEndpoint<ClientsEndpoint.EndpointUrlParams>
+	public class UsersEndpoint : FullBaseEndpoint<UsersEndpoint.EndpointUrlParams>
 	{
 		#region Constants
 
-		private const string CLIENT_ID_TAG = "CLIENT_ID";
+		private const string USER_ID_TAG = "USER_ID";
 
 		#endregion
 		
@@ -17,7 +17,7 @@ namespace Keycloak.Api.Clients
 		{
 			get
 			{
-				return $"/clients/{CLIENT_ID_TAG.ToUrlParam()}";
+				return $"/users/{USER_ID_TAG.ToUrlParam()}";
 			}
 		}
 
@@ -25,7 +25,7 @@ namespace Keycloak.Api.Clients
 
 		#region Sub Endpoints
 
-		public ClientSecretEndpoint ClientSecret { get; }
+		public UsersCountEndpoint UsersCount { get; }
 
 		#endregion
 
@@ -36,9 +36,9 @@ namespace Keycloak.Api.Clients
 		/// </summary>
 		/// <param name="baseUrl"></param>
 		/// <param name="realmSlug"></param>
-		public ClientsEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
+		public UsersEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
 		{
-			this.ClientSecret = new ClientSecretEndpoint(this);
+			this.UsersCount = new UsersCountEndpoint(this);
 		}
 
 		#endregion
@@ -47,9 +47,9 @@ namespace Keycloak.Api.Clients
 
 		public class EndpointUrlParams : UrlParamsBase
 		{
-			public EndpointUrlParams SetClientId(string clientId)
+			public EndpointUrlParams SetUserId(string userId)
 			{
-				this.SetKeyValue(CLIENT_ID_TAG, clientId);
+				this.SetKeyValue(USER_ID_TAG, userId);
 				return this;
 			}
 		}
