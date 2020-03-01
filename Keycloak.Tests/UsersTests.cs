@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Keycloak.Api.Users;
 using Keycloak.Core.Models.Users;
+using Keycloak.Extensions;
 using Keycloak.Rest.Models;
 using NUnit.Framework;
 
@@ -76,6 +78,52 @@ namespace Keycloak.Tests
 			else
 			{
 				Assert.Fail(getUserCredentialsResponse.Message);
+			}
+		}
+		
+		[Test]
+		public void CreateUserTest()
+		{
+			User user = new User()
+			{
+				Username = "ertugrul.ozcan",
+				FirstName = "Ertuğrul",
+				LastName = "Özcan",
+				EmailAddress = "ertugrul.ozcan@demirorenteknoloji.com",
+				IsEnabled = true,
+				TotP = false,
+				EmailVerified = false,
+				Access = new UserAccess()
+				{
+					Impersonate = true,
+					Manage = true,
+					View = true,
+					MapRoles = true,
+					ManageGroupMembership = true
+				},
+				Credentials = new List<UserCredentials>
+				{
+					new UserCredentials
+					{
+						CredentialType = "password",
+						Value = "<PASSWORD>",
+						CredentialData = "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+					}
+				}
+			};
+			
+			UsersEndpoint usersEndpoint = new UsersEndpoint(this.BASE_URL, "master");
+			var createUserResponse = usersEndpoint.Post(
+				body: user.ToRequestBody(),
+				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
+			
+			if (createUserResponse.IsSuccess)
+			{
+				Assert.AreEqual(createUserResponse.HttpCode, 201);
+			}
+			else
+			{
+				Assert.Fail(createUserResponse.Message);
 			}
 		}
 	}

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Keycloak.Core.Models.Users
@@ -44,6 +46,9 @@ namespace Keycloak.Core.Models.Users
 		
 		[JsonProperty("access")]
 		public UserAccess Access { get; set; }
+
+		[JsonProperty("credentials")]
+		public IEnumerable<UserCredentials> Credentials { get; set; }
 
 		#endregion
 	}

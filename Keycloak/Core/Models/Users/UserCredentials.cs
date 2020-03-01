@@ -17,6 +17,9 @@ namespace Keycloak.Core.Models.Users
 		
 		[JsonProperty("credentialData")]
 		public string CredentialData { get; set; }
+		
+		[JsonProperty("value")]
+		public string Value { get; set; }
 
 		#endregion
 	}
