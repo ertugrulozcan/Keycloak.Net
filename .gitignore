@@ -620,3 +620,4 @@ __pycache__/
 .DS_Store?
 package-lock.json
 /.sonarqube
+Keycloak.Tests/appsettings.json
