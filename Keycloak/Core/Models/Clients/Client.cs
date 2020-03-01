@@ -16,6 +16,9 @@ namespace Keycloak.Core.Models.Clients
 		[JsonProperty("name")]
         public string Name { get; set; }
         
+		[JsonProperty("rootUrl")]
+		public string RootUrl { get; set; }
+		
 		[JsonProperty("baseUrl")]
         public string BaseUrl { get; set; }
         
@@ -24,12 +27,18 @@ namespace Keycloak.Core.Models.Clients
         
 		[JsonProperty("enabled")]
         public bool Enabled { get; set; }
-        
+		
+		[JsonProperty("alwaysDisplayInConsole")]
+		public bool AlwaysDisplayInConsole { get; set; }
+
 		[JsonProperty("clientAuthenticatorType")]
         public string ClientAuthenticatorType { get; set; }
         
+		[JsonProperty("defaultRoles")]
+        public string[] DefaultRoles { get; set; }
+		
 		[JsonProperty("redirectUris")]
-        public string[] RedirectUris { get; set; }
+		public string[] RedirectUris { get; set; }
         
 		[JsonProperty("webOrigins")]
         public object[] WebOrigins { get; set; }

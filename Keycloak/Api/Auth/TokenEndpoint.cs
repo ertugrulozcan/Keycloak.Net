@@ -5,7 +5,7 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Auth
 {
-	public sealed class TokenEndpoint : RealmBoundedEndpoint<TokenEndpoint.EndpointUrlParams>, IAuthorizedEndpoint, IHasPost<TokenEndpoint.EndpointUrlParams>
+	public sealed class TokenEndpoint : RealmBoundedEndpoint<TokenEndpoint.IUrlParams>, IAuthorizedEndpoint, IHasPost<TokenEndpoint.IUrlParams>
 	{
 		#region Constants
 		
@@ -41,12 +41,12 @@ namespace Keycloak.Api.Auth
 
 		#region Methods
 
-		public IResponseResult Post(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Post(IUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Post<T>(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Post<T>(IUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest<T>(HttpMethod.Post, urlParams, body, queryString, headers);
 		}
@@ -54,13 +54,28 @@ namespace Keycloak.Api.Auth
 		#endregion
 
 		#region QueryParams
-
-		public sealed class EndpointUrlParams : UrlParamsBase
+		
+		public interface IUrlParams : Keycloak.Infrastructure.IUrlParams
 		{
-			public EndpointUrlParams SetProtocol(ClientProtocol protocol)
+			IUrlParams SetProtocol(ClientProtocol protocol);
+		}
+
+		public sealed class TokenUrlParams : UrlParamsBase, IUrlParams
+		{
+			public IUrlParams SetProtocol(ClientProtocol protocol)
 			{
 				this.SetKeyValue(PROTOCOL_TYPE_TAG, protocol.ToString());
 				return this;
+			}
+		}
+		
+		public static class UrlParams
+		{
+			public static IUrlParams SetProtocol(ClientProtocol protocol)
+			{
+				var urlParams = new TokenUrlParams();
+				urlParams.SetProtocol(protocol);
+				return urlParams;
 			}
 		}
 

@@ -3,7 +3,7 @@ using Keycloak.Infrastructure;
 
 namespace Keycloak.Api.Clients
 {
-	public sealed class ClientsEndpoint : FullBaseEndpoint<ClientsEndpoint.EndpointUrlParams>
+	public sealed class ClientsEndpoint : FullBaseEndpoint<ClientsEndpoint.IUrlParams>
 	{
 		#region Constants
 
@@ -44,13 +44,28 @@ namespace Keycloak.Api.Clients
 		#endregion
 
 		#region QueryParams
-
-		public class EndpointUrlParams : UrlParamsBase
+		
+		public interface IUrlParams : Keycloak.Infrastructure.IUrlParams
 		{
-			public EndpointUrlParams SetClientId(string clientId)
+			IUrlParams SetClientId(string clientId);
+		}
+
+		public class ClientsUrlParams : UrlParamsBase, IUrlParams
+		{
+			public IUrlParams SetClientId(string clientId)
 			{
 				this.SetKeyValue(CLIENT_ID_TAG, clientId);
 				return this;
+			}
+		}
+		
+		public static class UrlParams
+		{
+			public static IUrlParams SetClientId(string clientId)
+			{
+				var urlParams = new ClientsUrlParams();
+				urlParams.SetClientId(clientId);
+				return urlParams;
 			}
 		}
 

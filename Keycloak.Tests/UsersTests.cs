@@ -27,9 +27,8 @@ namespace Keycloak.Tests
 		public void GetUserByIdTest()
 		{
 			UsersEndpoint usersEndpoint = new UsersEndpoint(this.BASE_URL, "master");
-			var urlParams = new UsersEndpoint.EndpointUrlParams().SetUserId("e60dc75f-8cbb-4f90-a443-96a0e20939f1");
 			var getUsersResponse = usersEndpoint.Get<User>(
-				urlParams: urlParams,
+				urlParams: UsersEndpoint.UrlParams.SetUserId("e60dc75f-8cbb-4f90-a443-96a0e20939f1"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getUsersResponse.IsSuccess)
@@ -57,6 +56,26 @@ namespace Keycloak.Tests
 			else
 			{
 				Assert.Fail(getUsersCountResponse.Message);
+			}
+		}
+		
+		[Test]
+		public void GetUserCredentialsTest()
+		{
+			UsersEndpoint usersEndpoint = new UsersEndpoint(this.BASE_URL, "master");
+			
+			var getUserCredentialsResponse = usersEndpoint.Credentials.Get<UserCredentials[]>(
+				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"), 
+				urlParams: UsersEndpoint.UrlParams.SetUserId("1294bd3e-c39e-4ac5-a0e2-f126ed7437d6"));
+			
+			if (getUserCredentialsResponse.IsSuccess)
+			{
+				var usersCredentials = getUserCredentialsResponse.Data;
+				Assert.NotNull(usersCredentials);
+			}
+			else
+			{
+				Assert.Fail(getUserCredentialsResponse.Message);
 			}
 		}
 	}

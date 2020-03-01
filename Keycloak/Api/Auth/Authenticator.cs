@@ -77,8 +77,7 @@ namespace Keycloak.Api.Auth
 			});
 
 			var tokenEndpoint = new TokenEndpoint(baseUrl, "master");
-			var urlParams = new TokenEndpoint.EndpointUrlParams()
-				.SetProtocol(protocol);
+			var urlParams = TokenEndpoint.UrlParams.SetProtocol(protocol);
 
 			return tokenEndpoint.Post<AuthorizationToken>(urlParams, body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));
 		}

@@ -25,12 +25,29 @@ namespace Keycloak.Tests
 		}
 		
 		[Test]
+		public void GetClientsWithPaginationTest()
+		{
+			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
+			var getClientsResponse = clientsEndpoint.Get<Client[]>(
+				queryString: QueryString.Add("first", 0).Add("max", 20).Add("search", true),
+				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
+			if (getClientsResponse.IsSuccess)
+			{
+				var clients = getClientsResponse.Data;
+				Assert.NotNull(clients);
+			}
+			else
+			{
+				Assert.Fail(getClientsResponse.Message);
+			}
+		}
+		
+		[Test]
 		public void GetClientByIdTest()
 		{
 			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
-			var urlParams = new ClientsEndpoint.EndpointUrlParams().SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b");
 			var getClientsResponse = clientsEndpoint.Get<Client>(
-				urlParams: urlParams,
+				urlParams: ClientsEndpoint.UrlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getClientsResponse.IsSuccess)
@@ -49,11 +66,9 @@ namespace Keycloak.Tests
 		public void GetClientSecretTest()
 		{
 			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
-			var urlParams = new ClientSecretEndpoint.EndpointUrlParams();
-			urlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b");
 			
 			var getClientSecretResponse = clientsEndpoint.ClientSecret.Get<ClientSecretResponseModel>(
-				urlParams: urlParams,
+				urlParams: ClientsEndpoint.UrlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getClientSecretResponse.IsSuccess)

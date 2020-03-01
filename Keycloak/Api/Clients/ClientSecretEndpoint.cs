@@ -5,8 +5,8 @@ using Keycloak.Rest.Models;
 namespace Keycloak.Api.Clients
 {
 	public class ClientSecretEndpoint : 
-		EndpointBase<ClientSecretEndpoint.EndpointUrlParams>, ISubEndpoint<ClientsEndpoint>,
-		IHasGet<ClientSecretEndpoint.EndpointUrlParams> 
+		EndpointBase<ClientsEndpoint.IUrlParams>, ISubEndpoint<ClientsEndpoint>,
+		IHasGet<ClientsEndpoint.IUrlParams> 
 	{
 		#region Properties
 		
@@ -37,23 +37,14 @@ namespace Keycloak.Api.Clients
 
 		#region Methods
 
-		public IResponseResult Get(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Get(ClientsEndpoint.IUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest(HttpMethod.Get, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Get<T>(EndpointUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Get<T>(ClientsEndpoint.IUrlParams urlParams = null, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest<T>(HttpMethod.Get, urlParams, body, queryString, headers);
-		}
-
-		#endregion
-		
-		#region QueryParams
-
-		public sealed class EndpointUrlParams : ClientsEndpoint.EndpointUrlParams
-		{
-			
 		}
 
 		#endregion

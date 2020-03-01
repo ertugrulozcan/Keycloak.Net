@@ -4,9 +4,9 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.Users
 {
-	public class UsersCountEndpoint : 
+	public class CredentialsEndpoint :
 		EndpointBase<UsersEndpoint.IUrlParams>, ISubEndpoint<UsersEndpoint>,
-		IHasGet<UsersEndpoint.IUrlParams> 
+		IHasGet<UsersEndpoint.IUrlParams>
 	{
 		#region Properties
 		
@@ -16,7 +16,7 @@ namespace Keycloak.Api.Users
 		{
 			get
 			{
-				return $"{this.ParentEndpoint.Path}/count";
+				return $"{this.ParentEndpoint.Path}/credentials";
 			}
 		}
 		
@@ -28,7 +28,7 @@ namespace Keycloak.Api.Users
 		/// Constructor
 		/// </summary>
 		/// <param name="parentEndpoint"></param>
-		public UsersCountEndpoint(UsersEndpoint parentEndpoint) : base(parentEndpoint.BasePath)
+		public CredentialsEndpoint(UsersEndpoint parentEndpoint) : base(parentEndpoint.BasePath)
 		{
 			this.ParentEndpoint = parentEndpoint;
 		}

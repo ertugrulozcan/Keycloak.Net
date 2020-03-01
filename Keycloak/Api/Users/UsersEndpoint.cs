@@ -3,7 +3,7 @@ using Keycloak.Infrastructure;
 
 namespace Keycloak.Api.Users
 {
-	public class UsersEndpoint : FullBaseEndpoint<UsersEndpoint.EndpointUrlParams>
+	public class UsersEndpoint : FullBaseEndpoint<UsersEndpoint.IUrlParams>
 	{
 		#region Constants
 
@@ -26,6 +26,8 @@ namespace Keycloak.Api.Users
 		#region Sub Endpoints
 
 		public UsersCountEndpoint UsersCount { get; }
+		
+		public CredentialsEndpoint Credentials { get; }
 
 		#endregion
 
@@ -39,21 +41,37 @@ namespace Keycloak.Api.Users
 		public UsersEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
 		{
 			this.UsersCount = new UsersCountEndpoint(this);
+			this.Credentials = new CredentialsEndpoint(this);
 		}
 
 		#endregion
 
 		#region QueryParams
 
-		public class EndpointUrlParams : UrlParamsBase
+		public interface IUrlParams : Keycloak.Infrastructure.IUrlParams
 		{
-			public EndpointUrlParams SetUserId(string userId)
+			IUrlParams SetUserId(string userId);
+		}
+
+		public class UsersUrlParams : UrlParamsBase, IUrlParams
+		{
+			public IUrlParams SetUserId(string userId)
 			{
 				this.SetKeyValue(USER_ID_TAG, userId);
 				return this;
 			}
 		}
-
+		
+		public static class UrlParams
+		{
+			public static IUrlParams SetUserId(string userId)
+			{
+				var urlParams = new UsersUrlParams();
+				urlParams.SetUserId(userId);
+				return urlParams;
+			}
+		}
+		
 		#endregion
 	}
 }

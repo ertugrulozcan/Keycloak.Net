@@ -4,7 +4,7 @@ using Keycloak.Rest.Models;
 
 namespace Keycloak.Api.AuthenticationManagement
 {
-	public sealed class AuthenticatorProvidersEndpoint : RealmBoundedEndpoint<AuthenticatorProvidersEndpoint.EndpointUrlParams>, IHasGet<AuthenticatorProvidersEndpoint.EndpointUrlParams>
+	public sealed class AuthenticatorProvidersEndpoint : RealmBoundedEndpoint<AuthenticatorProvidersEndpoint.IUrlParams>, IHasGet<AuthenticatorProvidersEndpoint.IUrlParams>
 	{
 		#region Properties
 
@@ -34,12 +34,12 @@ namespace Keycloak.Api.AuthenticationManagement
 
 		#region Methods
 
-		public IResponseResult Get(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult Get(IUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest(HttpMethod.Get, urlParams, body, queryString, headers);
 		}
 		
-		public IResponseResult<T> Get<T>(EndpointUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
+		public IResponseResult<T> Get<T>(IUrlParams urlParams, RequestBody body = null, IQueryString queryString = null, IHeaderCollection headers = null)
 		{
 			return this.ExecuteRequest<T>(HttpMethod.Get, urlParams, body, queryString, headers);
 		}
@@ -48,7 +48,17 @@ namespace Keycloak.Api.AuthenticationManagement
 		
 		#region QueryParams
 
-		public sealed class EndpointUrlParams : UrlParamsBase
+		public interface IUrlParams : Keycloak.Infrastructure.IUrlParams
+		{
+			
+		}
+
+		public sealed class AuthenticationProvidersUrlParams : UrlParamsBase, IUrlParams
+		{
+			
+		}
+		
+		public static class UrlParams
 		{
 			
 		}

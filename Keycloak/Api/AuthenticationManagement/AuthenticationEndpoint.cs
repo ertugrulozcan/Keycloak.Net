@@ -2,7 +2,7 @@ using Keycloak.Infrastructure;
 
 namespace Keycloak.Api.AuthenticationManagement
 {
-	public sealed class AuthenticationEndpoint : RealmBoundedEndpoint<AuthenticationEndpoint.EndpointUrlParams>
+	public sealed class AuthenticationEndpoint : RealmBoundedEndpoint<AuthenticationEndpoint.IUrlParams>
 	{
 		#region Properties
 
@@ -33,7 +33,17 @@ namespace Keycloak.Api.AuthenticationManagement
 		
 		#region QueryParams
 
-		public sealed class EndpointUrlParams : UrlParamsBase
+		public interface IUrlParams : Keycloak.Infrastructure.IUrlParams
+		{
+			
+		}
+
+		public sealed class AuthenticationUrlParams : UrlParamsBase, IUrlParams
+		{
+			
+		}
+		
+		public static class UrlParams
 		{
 			
 		}
