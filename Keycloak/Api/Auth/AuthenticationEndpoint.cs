@@ -1,6 +1,6 @@
 using Keycloak.Infrastructure;
 
-namespace Keycloak.Api.AuthenticationManagement
+namespace Keycloak.Api.Auth
 {
 	public sealed class AuthenticationEndpoint : RealmBoundedEndpoint<AuthenticationEndpoint.IUrlParams>
 	{
@@ -26,7 +26,7 @@ namespace Keycloak.Api.AuthenticationManagement
 
 		public AuthenticationEndpoint(string baseUrl, string realmSlug) : base(baseUrl, realmSlug)
 		{
-			
+			this.AuthenticatorProviders = new AuthenticatorProvidersEndpoint(this);
 		}
 
 		#endregion

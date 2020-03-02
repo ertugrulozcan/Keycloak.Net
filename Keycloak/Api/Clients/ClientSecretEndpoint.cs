@@ -5,7 +5,8 @@ using Keycloak.Rest.Models;
 namespace Keycloak.Api.Clients
 {
 	public class ClientSecretEndpoint : 
-		EndpointBase<ClientsEndpoint.IUrlParams>, ISubEndpoint<ClientsEndpoint>,
+		EndpointBase<ClientsEndpoint.IUrlParams>, 
+		ISubEndpoint<ClientsEndpoint>,
 		IHasGet<ClientsEndpoint.IUrlParams> 
 	{
 		#region Properties

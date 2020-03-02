@@ -30,14 +30,14 @@ namespace Keycloak.Tests
 		{
 			UsersEndpoint usersEndpoint = new UsersEndpoint(this.BASE_URL, "master");
 			var getUsersResponse = usersEndpoint.Get<User>(
-				urlParams: UsersEndpoint.UrlParams.SetUserId("e60dc75f-8cbb-4f90-a443-96a0e20939f1"),
+				urlParams: UsersEndpoint.UrlParams.SetUserId("1294bd3e-c39e-4ac5-a0e2-f126ed7437d6"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getUsersResponse.IsSuccess)
 			{
 				var user = getUsersResponse.Data;
 				Assert.NotNull(user);
-				Assert.AreEqual("e60dc75f-8cbb-4f90-a443-96a0e20939f1", user.Id);
+				Assert.AreEqual("1294bd3e-c39e-4ac5-a0e2-f126ed7437d6", user.Id);
 			}
 			else
 			{
