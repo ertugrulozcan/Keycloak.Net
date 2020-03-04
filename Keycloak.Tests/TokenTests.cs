@@ -8,7 +8,7 @@ namespace Keycloak.Tests
 		[Test]
 		public void GetTokenTest()
 		{
-			var tokenResult = Authenticator.GetToken(BASE_URL, this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
+			var tokenResult = Authenticator.GetToken(this.BASE_URL, "master", this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
 			if (tokenResult.IsSuccess)
 			{
 				var token = tokenResult.Data;

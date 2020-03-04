@@ -40,32 +40,32 @@ namespace Keycloak.Api.Auth
 		
 		#region Methods
 
-		public static IResponseResult<AuthorizationToken> GetToken(string baseUrl, Credentials credentials)
+		public static IResponseResult<AuthorizationToken> GetToken(string baseUrl, string masterRealm, Credentials credentials)
 		{
-			return GetToken(baseUrl, credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
+			return GetToken(baseUrl, masterRealm, credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
 		}
 		
-		public static IResponseResult<AuthorizationToken> GetToken(string baseUrl, Credentials credentials, AccessType accessType, ClientProtocol protocol)
+		public static IResponseResult<AuthorizationToken> GetToken(string baseUrl, string masterRealm, Credentials credentials, AccessType accessType, ClientProtocol protocol)
 		{
 			if (accessType == AccessType.Confidential)
 			{
-				return GetTokenAsConfidential(baseUrl, credentials, protocol);
+				return GetTokenAsConfidential(baseUrl, masterRealm, credentials, protocol);
 			}
 			
 			if (accessType == AccessType.Public)
 			{
-				return GetTokenAsPublic(baseUrl, credentials, protocol);
+				return GetTokenAsPublic(baseUrl, masterRealm, credentials, protocol);
 			}
 			
 			if (accessType == AccessType.BearerOnly)
 			{
-				return GetTokenAsBearerOnly(baseUrl, credentials, protocol);
+				return GetTokenAsBearerOnly(baseUrl, masterRealm, credentials, protocol);
 			}
 			
 			throw new Exception("Unknown access type!");
 		}
 
-		private static IResponseResult<AuthorizationToken> GetTokenAsConfidential(string baseUrl, Credentials credentials, ClientProtocol protocol)
+		private static IResponseResult<AuthorizationToken> GetTokenAsConfidential(string baseUrl, string masterRealm, Credentials credentials, ClientProtocol protocol)
 		{
 			var body = RequestBody.CreateUrlEncoded(new Dictionary<string, string>
 			{
@@ -76,18 +76,18 @@ namespace Keycloak.Api.Auth
 				{ "client_secret", credentials.ClientSecret },
 			});
 
-			var tokenEndpoint = new TokenEndpoint(baseUrl, "master");
+			var tokenEndpoint = new TokenEndpoint(baseUrl, masterRealm);
 			var urlParams = TokenEndpoint.UrlParams.SetProtocol(protocol);
 
 			return tokenEndpoint.Post<AuthorizationToken>(urlParams, body, null, HeaderCollection.Add("Content-Type", "application/x-www-form-urlencoded"));
 		}
 		
-		private static IResponseResult<AuthorizationToken> GetTokenAsPublic(string baseUrl, Credentials credentials, ClientProtocol protocol)
+		private static IResponseResult<AuthorizationToken> GetTokenAsPublic(string baseUrl, string masterRealm, Credentials credentials, ClientProtocol protocol)
 		{
 			throw new NotImplementedException();
 		}
 		
-		private static IResponseResult<AuthorizationToken> GetTokenAsBearerOnly(string baseUrl, Credentials credentials, ClientProtocol protocol)
+		private static IResponseResult<AuthorizationToken> GetTokenAsBearerOnly(string baseUrl, string masterRealm, Credentials credentials, ClientProtocol protocol)
 		{
 			throw new NotImplementedException();
 		}

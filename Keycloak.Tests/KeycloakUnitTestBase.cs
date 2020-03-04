@@ -42,7 +42,7 @@ namespace Keycloak.Tests
 				GrantType = "password"
 			};
 			
-			var tokenResult = Authenticator.GetToken(this.BASE_URL, this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
+			var tokenResult = Authenticator.GetToken(this.BASE_URL, "master", this.Credentials, AccessType.Confidential, ClientProtocol.OpenIdConnect);
 			if (tokenResult.IsSuccess)
 			{
 				var token = tokenResult.Data;
