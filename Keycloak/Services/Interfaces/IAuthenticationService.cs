@@ -6,6 +6,8 @@ namespace Keycloak.Services.Interfaces
 {
 	public interface IAuthenticationService
 	{
+		IResponseResult<AuthorizationToken> Login(Credentials credentials, AccessType accessType, ClientProtocol protocol);
+		
 		IResponseResult<AuthorizationToken> GetToken(AccessType accessType, ClientProtocol protocol);
 	}
 }

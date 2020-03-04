@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using Keycloak.Api.Users;
+using Keycloak.Boot;
 using Keycloak.Core.Models.Users;
 using Keycloak.Extensions;
 using Keycloak.Rest.Models;
@@ -21,12 +22,11 @@ namespace Keycloak.Services
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="baseUrl"></param>
-		/// <param name="masterRealm"></param>
+		/// <param name="options"></param>
 		/// <param name="authenticationService"></param>
-		public UserService(string baseUrl, string masterRealm, IAuthenticationService authenticationService) : base(baseUrl, masterRealm, authenticationService)
+		public UserService(IKeycloakOptions options, IAuthenticationService authenticationService) : base(options, authenticationService)
 		{
-			this.usersEndpoint = new UsersEndpoint(baseUrl, masterRealm);
+			this.usersEndpoint = new UsersEndpoint(this.BASE_URL, this.MASTER_REALM);
 		}
 
 		#endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Security.Authentication;
 using Keycloak.Api.Auth;
+using Keycloak.Boot;
 using Keycloak.Core.Models.Auth;
 using Keycloak.Rest.Models;
 using Keycloak.Services.Interfaces;
@@ -20,10 +21,9 @@ namespace Keycloak.Services
 		/// <summary>
 		/// Constuctor
 		/// </summary>
-		/// <param name="baseUrl"></param>
-		/// <param name="masterRealm"></param>
+		/// <param name="options"></param>
 		/// <param name="authenticationService"></param>
-		protected AuthorizedServiceBase(string baseUrl, string masterRealm, IAuthenticationService authenticationService) : base(baseUrl, masterRealm)
+		protected AuthorizedServiceBase(IKeycloakOptions options, IAuthenticationService authenticationService) : base(options)
 		{
 			this.authenticationService = authenticationService;
 		}

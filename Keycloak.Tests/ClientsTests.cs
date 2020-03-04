@@ -47,14 +47,14 @@ namespace Keycloak.Tests
 		{
 			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
 			var getClientsResponse = clientsEndpoint.Get<Client>(
-				urlParams: ClientsEndpoint.UrlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b"),
+				urlParams: ClientsEndpoint.UrlParams.SetClientId("23c186f5-6fc7-42fb-a43f-08295b9b4e65"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getClientsResponse.IsSuccess)
 			{
 				var client = getClientsResponse.Data;
 				Assert.NotNull(client);
-				Assert.AreEqual("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b", client.Id);
+				Assert.AreEqual("23c186f5-6fc7-42fb-a43f-08295b9b4e65", client.Id);
 			}
 			else
 			{
@@ -68,7 +68,7 @@ namespace Keycloak.Tests
 			ClientsEndpoint clientsEndpoint = new ClientsEndpoint(this.BASE_URL, "master");
 			
 			var getClientSecretResponse = clientsEndpoint.ClientSecret.Get<ClientSecretResponseModel>(
-				urlParams: ClientsEndpoint.UrlParams.SetClientId("d121d5d0-dc1f-4916-8a9f-f5d19fc60d5b"),
+				urlParams: ClientsEndpoint.UrlParams.SetClientId("23c186f5-6fc7-42fb-a43f-08295b9b4e65"),
 				headers: HeaderCollection.Add("Authorization", $"Bearer {this.Token.AccessToken}"));
 			
 			if (getClientSecretResponse.IsSuccess)

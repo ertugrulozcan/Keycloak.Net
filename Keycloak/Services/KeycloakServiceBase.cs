@@ -1,3 +1,5 @@
+using Keycloak.Boot;
+
 namespace Keycloak.Services
 {
 	public abstract class KeycloakServiceBase
@@ -14,12 +16,11 @@ namespace Keycloak.Services
 		/// <summary>
 		/// Constuctor
 		/// </summary>
-		/// <param name="baseUrl"></param>
-		/// <param name="masterRealm"></param>
-		protected KeycloakServiceBase(string baseUrl, string masterRealm)
+		/// <param name="options"></param>
+		protected KeycloakServiceBase(IKeycloakOptions options)
 		{
-			this.BASE_URL = baseUrl;
-			this.MASTER_REALM = masterRealm;
+			this.BASE_URL = options.BaseUrl;
+			this.MASTER_REALM = options.MasterRealm;
 		}
 
 		#endregion
