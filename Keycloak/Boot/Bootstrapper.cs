@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Keycloak.Ioc;
 
 namespace Keycloak.Boot
@@ -19,21 +20,26 @@ namespace Keycloak.Boot
 		#endregion
 		
 		#region Methods
-
-		public void InitializeServices()
+		
+		public IDictionary<Type, object> InitializeServices()
 		{
-			var services = ServiceProvider.Current.GetServiceContracts();
-			if (services != null)
+			var serviceDictionary = new Dictionary<Type, object>();
+			
+			var serviceTypes = ServiceProvider.Current.GetServiceContracts();
+			if (serviceTypes != null)
 			{
-				foreach (var serviceContract in services)
+				foreach (var serviceContractType in serviceTypes)
 				{
-					var serviceImpl = ServiceProvider.Current.GetService(serviceContract);
+					var serviceImpl = ServiceProvider.Current.GetService(serviceContractType);
 					if (serviceImpl != null)
 					{
 						Console.WriteLine($"{serviceImpl.GetType().Name} resolved.");
+						serviceDictionary.Add(serviceContractType, serviceImpl);
 					}
 				}
 			}
+			
+			return serviceDictionary;
 		}
 
 		#endregion
