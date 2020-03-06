@@ -64,11 +64,11 @@ namespace Keycloak.Rest
 				{
 					if (body.Type == RequestBody.BodyTypes.Json)
 					{
-						request.AddJsonBody(body);
+						request.AddJsonBody(body.Context);
 					}
 					else if (body.Type == RequestBody.BodyTypes.Xml)
 					{
-						request.AddXmlBody(body);
+						request.AddXmlBody(body.Context);
 					}
 					else if (body.Type == RequestBody.BodyTypes.UrlEncoded)
 					{
