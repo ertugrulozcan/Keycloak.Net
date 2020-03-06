@@ -1,11 +1,17 @@
-using System.Runtime.CompilerServices;
-
 namespace Keycloak.Infrastructure
 {
 	public abstract class RealmBoundedEndpoint<TUrlParams> : EndpointBase<TUrlParams>, IRealmBoundedEndpoint where TUrlParams : IUrlParams
 	{
 		#region Properties
 
+		public virtual string Slug
+		{
+			get
+			{
+				return "/realms";
+			}
+		}
+		
 		public string RealmName { get; }
 
 		#endregion

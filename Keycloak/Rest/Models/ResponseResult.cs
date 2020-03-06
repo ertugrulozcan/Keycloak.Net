@@ -2,24 +2,8 @@ using System;
 
 namespace Keycloak.Rest.Models
 {
-	public interface IResponseResult
+	public interface IResponseResult : IResponseResult<object>
 	{
-		#region Properties
-
-		bool IsSuccess { get; }
-		
-		System.Net.HttpStatusCode? HttpCode { get; }
-		
-		string Message { get; set; }
-		
-		object Data { get; set; }
-
-		byte[] RawData { get; set; }
-
-		Exception Exception { get; set; }
-
-		#endregion
-
 		#region Methods
 
 		ResponseResult<T> Cast<T>(Func<ResponseResult, T> dataPredicate);

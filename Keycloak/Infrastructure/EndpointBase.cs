@@ -55,7 +55,7 @@ namespace Keycloak.Infrastructure
 			if (this is IAdministratorEndpoint administratorEndpoint)
 				sections.Add($"/{administratorEndpoint.AdminSlug}");
 			if (this is IRealmBoundedEndpoint realmBoundedEndpoint)
-				sections.Add($"/realms/{realmBoundedEndpoint.RealmName}");
+				sections.Add($"{realmBoundedEndpoint.Slug}/{realmBoundedEndpoint.RealmName}");
 				
 			string path = string.Join(string.Empty, sections);
 			string url = UrlHelper.ClearRepeatedSlashes($"{path}/{this.SelfPath}");
