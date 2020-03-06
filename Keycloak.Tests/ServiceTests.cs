@@ -25,9 +25,8 @@ namespace Keycloak.Tests
 			
 			var clientService = ServiceProvider.Current.GetInstance<IClientService>();
 			var userService = ServiceProvider.Current.GetInstance<IUserService>();
+			var tokenService = ServiceProvider.Current.GetInstance<ITokenService>();
 
-			var users = userService.GetUsers();
-			
 			Assert.NotNull(authenticationService);
 			Assert.NotNull(clientService);
 			Assert.NotNull(userService);
