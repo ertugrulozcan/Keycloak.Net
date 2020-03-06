@@ -6,6 +6,8 @@ namespace Keycloak.Services.Interfaces
 {
 	public interface IUserService
 	{
+		IResponseResult<SessionUser> WhoAmI(string accessToken);
+		
 		IResponseResult<IEnumerable<User>> GetUsers();
 
 		IResponseResult<User> GetUserById(string userId);

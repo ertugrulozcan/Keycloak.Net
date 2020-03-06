@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using Keycloak.Api.Console;
 using Keycloak.Api.Users;
 using Keycloak.Boot;
 using Keycloak.Core.Models.Users;
@@ -13,6 +14,7 @@ namespace Keycloak.Services
 	{
 		#region Endpoints
 
+		private readonly MeEndpoint meEndpoint;
 		private readonly UsersEndpoint usersEndpoint;
 
 		#endregion
@@ -26,12 +28,18 @@ namespace Keycloak.Services
 		/// <param name="authenticationService"></param>
 		public UserService(IKeycloakOptions options, IAuthenticationService authenticationService) : base(options, authenticationService)
 		{
+			this.meEndpoint = new MeEndpoint(this.BASE_URL, this.MASTER_REALM);
 			this.usersEndpoint = new UsersEndpoint(this.BASE_URL, this.MASTER_REALM);
 		}
 
 		#endregion
 		
 		#region Methdos
+
+		public IResponseResult<SessionUser> WhoAmI(string accessToken)
+		{
+			return this.meEndpoint.Get<SessionUser>(headers: HeaderCollection.Add("Authorization", $"Bearer {accessToken}"));
+		}
 
 		public IResponseResult<IEnumerable<User>> GetUsers()
 		{
