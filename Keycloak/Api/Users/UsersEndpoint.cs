@@ -28,7 +28,9 @@ namespace Keycloak.Api.Users
 		public UsersCountEndpoint UsersCount { get; }
 		
 		public CredentialsEndpoint Credentials { get; }
-
+		
+		public LogoutEndpoint Logout { get; }
+		
 		#endregion
 
 		#region Constructors
@@ -42,6 +44,7 @@ namespace Keycloak.Api.Users
 		{
 			this.UsersCount = new UsersCountEndpoint(this);
 			this.Credentials = new CredentialsEndpoint(this);
+			this.Logout = new LogoutEndpoint(this);
 		}
 
 		#endregion

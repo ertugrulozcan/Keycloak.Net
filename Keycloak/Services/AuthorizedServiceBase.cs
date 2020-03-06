@@ -1,6 +1,4 @@
 using System;
-using System.Security.Authentication;
-using Keycloak.Api.Auth;
 using Keycloak.Boot;
 using Keycloak.Core.Models.Auth;
 using Keycloak.Rest.Models;
@@ -34,29 +32,7 @@ namespace Keycloak.Services
 
 		protected IResponseResult<TResult> ExecuteAuthorized<TResult>(Func<AuthorizationToken, IResponseResult<TResult>> action)
 		{
-			try
-			{
-				var response = action(this.GetToken());
-				return response;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				throw;
-			}
-		}
-
-		private AuthorizationToken GetToken()
-		{
-			var tokenResult = this.authenticationService.GetToken(AccessType.Confidential, ClientProtocol.OpenIdConnect);
-			if (tokenResult.IsSuccess)
-			{
-				return tokenResult.Data;	
-			}
-			else
-			{
-				throw new AuthenticationException("Critical Error! Admin authentication failed!", new Exception(tokenResult.Message));
-			}
+			return this.authenticationService.ExecuteAuthorized(action);
 		}
 
 		#endregion
