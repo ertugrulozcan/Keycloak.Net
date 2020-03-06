@@ -22,7 +22,7 @@ namespace Keycloak.Core.Models.Users
 		
 		[JsonProperty("lastName")]
 		public string LastName { get; set; }
-		
+
 		[JsonProperty("email")]
 		public string EmailAddress { get; set; }
 		
@@ -50,6 +50,15 @@ namespace Keycloak.Core.Models.Users
 		[JsonProperty("credentials")]
 		public IEnumerable<UserCredentials> Credentials { get; set; }
 
+		[JsonIgnore]
+		public string FullName
+		{
+			get
+			{
+				return $"{this.FirstName} {this.LastName}";
+			}
+		}
+		
 		#endregion
 	}
 }
