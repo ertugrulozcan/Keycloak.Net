@@ -1,0 +1,109 @@
+@model Keycloak.WebClient.ViewModels.Home.LoginViewModel
+
+@{
+	Layout = null;
+}
+
+<link href="/css/themes/animate.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="/css/pages/login.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Kanit:800&display=swap" rel="stylesheet">
+
+<style>
+    body {
+    	background:
+    		linear-gradient(90deg, #131313 20px, transparent 1%) center,
+    		linear-gradient(#131313 20px, transparent 1%) center,
+    		#272727;
+    	background-size: 22px 22px;
+    	overflow: hidden;
+    }
+</style>
+
+<div class="middle-box text-center loginscreen animated fadeInDown">
+	<div>
+		<div>
+			<h1 class="logo-name">PAF</h1>
+		</div>
+		<h3>Keycloak.Net</h3>
+
+		<p>Login with your Keycloak© account.</p>
+		@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+		{
+			<div class="form-group">
+				<input asp-for="Username" type="text" class="form-control" placeholder="Username" required="">
+			</div>
+			<div class="form-group">
+				<input asp-for="Password" type="password" class="form-control" placeholder="Password" required="">
+			</div>
+			<div class="input-group input-group-sm mb-3">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="inputGroupSelect01">Client</label>
+				</div>
+				
+				@Html.DropDownListFor(model => model.ClientId, new SelectList(Model.ClientList, "Value", "Text"), null, new { @class = "custom-select", id = "inputGroupSelect01" })
+			</div>
+			
+			<div style="margin-bottom: 15px;">
+				<span>
+					<strong style="color: #FF2800; font-size: 110%; word-wrap: break-word;">@Html.ValidationSummary()</strong>
+				</span>	
+			</div>	
+
+			<button type="submit" class="btn btn-outline-success block full-width m-b">Login</button>	
+		}
+		
+		<p class="m-t"></p>
+		
+		<div>
+			<a asp-controller="Home" asp-action="Register">Register</a>
+		</div>
+		
+		<p class="m-t"></p>
+		
+		<div>
+			<p>
+				<small>Version 1.0.0</small>
+			</p>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<style>
+		.page-footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #00000044;
+            border-top: 1px solid #888888;
+            color: #E5E5E5;
+            z-index: 1002;
+        }
+	</style>
+	
+	<div class="page-footer">
+		<div class="font-13">@(DateTime.Now.Year) © Ertuğrul Özcan | <b>Keycloak.Net</b></div>
+		<div class="font-13">
+			<span class="badge badge-success">Keycloak</span>
+		</div>
+	</div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
